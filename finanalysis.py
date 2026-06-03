@@ -1,6 +1,8 @@
 import yfinance as yf
 import pandas as pd
 import streamlit as st   # add at top with other imports, the rest at the bottom
+import numpy as np
+
 
 def fetch_data(tickers, start_date, end_date):
     data_frames = []
@@ -23,6 +25,8 @@ def calculate_sortino_ratio(returns, risk_free_rate=0.02):
     downside_deviation = downside_returns.std().mean()
     return (portfolio_return - risk_free_rate) / downside_deviation
 
+def portfolio_optimization(returns):
+    return np.ones(len(returns.columns)) / len(returns.columns
 
 st.title("Financial Analysis Web App")
 
@@ -49,4 +53,12 @@ sortino_ratio = calculate_sortino_ratio(returns_data)
 st.subheader("Performance Metrics")
 st.write(f"Sharpe Ratio: {sharpe_ratio:.2f}")
 st.write(f"Sortino Ratio: {sortino_ratio:.2f}")
+
+optimal_weights = portfolio_optimization(returns_data)
+
+st.subheader("Portfolio Optimization")
+st.write("Optimal Portfolio Weights:")
+for ticker, weight in zip(tickers, optimal_weights):
+    st.write(f"{ticker}: {weight:.2%}")
+
 
